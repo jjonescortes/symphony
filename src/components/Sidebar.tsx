@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 const imgVector1 = "https://www.figma.com/api/mcp/asset/8ddce924-fb12-4c00-937d-c69392921986";
 const imgVector2 = "https://www.figma.com/api/mcp/asset/591eb54f-cf1f-4184-a4e4-22bfd23a7896";
@@ -42,17 +42,99 @@ const navSections = [
 ];
 
 function NavSectionIcon({ icon }: { icon: string }) {
-  const cls = "absolute -translate-y-1/2 left-[12px] top-[calc(50%-0.5px)] size-[18px] flex items-center justify-center text-white";
-  if (icon === "sparkles") {
-    return (
-      <div className={cls}>
-        <span className="font-['Font_Awesome_6_Sharp:Regular',sans-serif] not-italic text-[14px] leading-none">✦</span>
-      </div>
-    );
-  }
+  const cls = "absolute -translate-y-1/2 left-[12px] top-[calc(50%-0.5px)] size-[18px] flex items-center justify-center";
+
+  const icons: Record<string, React.ReactNode> = {
+    compass: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <circle cx="9" cy="9" r="7.5" stroke="white" strokeWidth="1.3"/>
+        <polygon points="9,3.5 10.2,8 9,9 7.8,8" fill="white"/>
+        <polygon points="9,14.5 10.2,10 9,9 7.8,10" fill="white" opacity="0.5"/>
+        <polygon points="3.5,9 8,7.8 9,9 8,10.2" fill="white" opacity="0.5"/>
+        <polygon points="14.5,9 10,7.8 9,9 10,10.2" fill="white"/>
+        <circle cx="9" cy="9" r="1" fill="white"/>
+      </svg>
+    ),
+    sparkles: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <path d="M9 2L9.9 6.5L14 7L9.9 8L9 12.5L8.1 8L4 7L8.1 6.5L9 2Z" fill="white"/>
+        <path d="M14 1L14.5 3.5L17 4L14.5 4.5L14 7L13.5 4.5L11 4L13.5 3.5L14 1Z" fill="white"/>
+        <path d="M4 11L4.5 13L7 13.5L4.5 14L4 16L3.5 14L1 13.5L3.5 13L4 11Z" fill="white"/>
+      </svg>
+    ),
+    customers: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <circle cx="9" cy="6" r="3.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M2.5 16c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+    ),
+    analytics: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <rect x="1.5" y="9" width="3" height="7.5" rx="0.8" fill="white" opacity="0.5"/>
+        <rect x="7" y="5" width="3" height="11.5" rx="0.8" fill="white"/>
+        <rect x="12.5" y="2" width="3" height="14.5" rx="0.8" fill="white" opacity="0.8"/>
+        <path d="M1.5 16.5h15" stroke="white" strokeWidth="1.3" strokeLinecap="round"/>
+      </svg>
+    ),
+    payments: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <rect x="1.5" y="4" width="15" height="10" rx="1.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M1.5 7.5h15" stroke="white" strokeWidth="1.4"/>
+        <rect x="3.5" y="10" width="3" height="1.5" rx="0.5" fill="white"/>
+        <rect x="8" y="10" width="2" height="1.5" rx="0.5" fill="white" opacity="0.6"/>
+      </svg>
+    ),
+    revrec: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <rect x="2" y="3" width="14" height="13" rx="1.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M2 7h14" stroke="white" strokeWidth="1.4"/>
+        <path d="M6 2v2M12 2v2" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M5.5 11l2 2 4-4" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    config: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <circle cx="9" cy="9" r="2.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M9 1.5v2M9 14.5v2M1.5 9h2M14.5 9h2M3.6 3.6l1.4 1.4M13 13l1.4 1.4M3.6 14.4l1.4-1.4M13 5l1.4-1.4" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+    ),
+    appmanagement: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <rect x="1.5" y="1.5" width="6.5" height="6.5" rx="1.2" stroke="white" strokeWidth="1.4"/>
+        <rect x="10" y="1.5" width="6.5" height="6.5" rx="1.2" stroke="white" strokeWidth="1.4"/>
+        <rect x="1.5" y="10" width="6.5" height="6.5" rx="1.2" stroke="white" strokeWidth="1.4"/>
+        <rect x="10" y="10" width="6.5" height="6.5" rx="1.2" stroke="white" strokeWidth="1.4"/>
+      </svg>
+    ),
+    integrations: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <path d="M9 1.5L16.5 9L9 16.5L1.5 9L9 1.5Z" stroke="white" strokeWidth="1.4" strokeLinejoin="round"/>
+        <path d="M9 5.5L12.5 9L9 12.5L5.5 9L9 5.5Z" fill="white"/>
+      </svg>
+    ),
+    admin: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <rect x="3" y="8" width="12" height="9" rx="1.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M5.5 8V6a3.5 3.5 0 017 0v2" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+        <circle cx="9" cy="12.5" r="1.5" fill="white"/>
+      </svg>
+    ),
+    environment: (
+      <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+        <circle cx="9" cy="9" r="7.5" stroke="white" strokeWidth="1.4"/>
+        <path d="M9 1.5C9 1.5 6 5 6 9s3 7.5 3 7.5M9 1.5C9 1.5 12 5 12 9s-3 7.5-3 7.5" stroke="white" strokeWidth="1.2"/>
+        <path d="M1.5 9h15M2.5 5.5h13M2.5 12.5h13" stroke="white" strokeWidth="1.2"/>
+      </svg>
+    ),
+  };
+
   return (
-    <div className={`${cls} opacity-70`}>
-      <div className="size-3 rounded-sm border border-white/60" />
+    <div className={cls}>
+      {icons[icon] ?? (
+        <svg viewBox="0 0 18 18" fill="none" className="size-[18px]">
+          <rect x="2" y="2" width="14" height="14" rx="2" stroke="white" strokeWidth="1.4"/>
+        </svg>
+      )}
     </div>
   );
 }
