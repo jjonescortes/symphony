@@ -35,6 +35,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          NEXT_PUBLIC_APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
