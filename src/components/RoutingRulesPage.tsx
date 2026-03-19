@@ -6,6 +6,12 @@ import { initialRules } from "@/lib/data";
 import RuleDetailPanel from "./RuleDetailPanel";
 import SetDefaultGatewayPanel from "./SetDefaultGatewayPanel";
 
+const CheckCircleIcon = () => (
+  <svg className="size-5 text-green-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+  </svg>
+);
+
 const imgIconSolidAngleRight = "https://www.figma.com/api/mcp/asset/8e40088f-9ad6-4c65-a0ed-61dbd19b8a75";
 const imgQuestionCircle = "https://www.figma.com/api/mcp/asset/0c4043f7-7a4f-46be-aeb3-423e6bce6b94";
 const imgSortUp = "https://www.figma.com/api/mcp/asset/f65ae129-7670-4785-bcad-c92cdf2e561d";
@@ -18,17 +24,31 @@ type Mode = "default" | "editPriority";
 type Panel = "none" | "ruleDetail" | "defaultGateway";
 
 export default function RoutingRulesPage({
+  rules,
+  setRules,
+  successMessage,
+  onDismissSuccess,
   onCreateRule,
   onEditRule,
 }: {
+  rules: Rule[];
+  setRules: React.Dispatch<React.SetStateAction<Rule[]>>;
+  successMessage: string | null;
+  onDismissSuccess: () => void;
   onCreateRule: () => void;
   onEditRule: (rule: Rule) => void;
 }) {
-  const [rules, setRules] = useState<Rule[]>(initialRules);
   const [mode, setMode] = useState<Mode>("default");
   const [panel, setPanel] = useState<Panel>("none");
   const [selectedRule, setSelectedRule] = useState<Rule | null>(null);
   const [showActionsDropdown, setShowActionsDropdown] = useState(false);
+
+  // Scroll to top whenever a success message appears so the banner is visible
+  useEffect(() => {
+    if (successMessage) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [successMessage]);
   const [openOverflowId, setOpenOverflowId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -189,6 +209,21 @@ export default function RoutingRulesPage({
       <div className="pt-[118px] flex">
         <div className={`flex-1 p-6 transition-all ${hasRightPanel || mode === "editPriority" ? "pr-[380px]" : "pr-[356px]"}`}>
           <div className="flex flex-col gap-[22px]">
+
+          {/* Success banner */}
+          {successMessage && (
+            <div className="bg-[#eaf6ed] border border-[#7bc89b] rounded-lg flex items-center gap-3 px-4 py-3">
+              <CheckCircleIcon />
+              <span className="flex-1 text-[13px] font-['FT_Polar_Trim:Regular',sans-serif] text-[#141411]">
+                {successMessage}
+              </span>
+              <button onClick={onDismissSuccess} className="text-[#737169] hover:text-[#141411] cursor-pointer shrink-0">
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          )}
 
             {/* Active Rules */}
             <section className="flex flex-col gap-[10px]">

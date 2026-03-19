@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import type { Rule } from "@/lib/data";
+import ConditionsCard from "./ConditionsCard";
+import GatewayCard from "./GatewayCard";
+import SelectIcon from "./SelectIcon";
 
 const imgIconSolidAngleRight = "https://www.figma.com/api/mcp/asset/8e40088f-9ad6-4c65-a0ed-61dbd19b8a75";
 const imgExternalLinkAlt = "https://www.figma.com/api/mcp/asset/60a94ae2-260a-462b-a3f0-79b51ecba726";
@@ -12,7 +15,7 @@ type Props = {
   editRule?: Rule | null;
   totalRules: number;
   onCancel: () => void;
-  onCreate: () => void;
+  onCreate: (ruleName: string, ruleId: string) => void;
 };
 
 export default function CreateRulePage({ editRule, totalRules, onCancel, onCreate }: Props) {
@@ -20,8 +23,6 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
   const [ruleName, setRuleName] = useState(editRule?.name ?? "");
   const [ruleDescription, setRuleDescription] = useState(editRule?.description ?? "");
   const [paymentType, setPaymentType] = useState("Any type of payment");
-  const [conditionType, setConditionType] = useState("Any type of payment");
-  const [routingType, setRoutingType] = useState("Default routing");
   const [enabled, setEnabled] = useState(true);
 
   return (
@@ -77,29 +78,31 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
 
       {/* Content */}
       <div className="pt-[118px] flex">
-        <div className="flex-1 p-6 pr-[316px] max-w-[900px]">
+        <div className="flex-1 p-6 pr-[316px] max-w-[1100px]">
           <div className="flex flex-col gap-4">
 
             {/* Name Your Rule */}
-            <div className="bg-white border border-[#b9b6ac] rounded-lg p-6">
-              <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[16px] leading-[24px] text-[#141411] mb-1">Name Your Rule</h2>
-              <p className="text-[#737169] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] mb-4">
-                Pick a short, clear name so you can easily find this rule later. Choose a concise, descriptive rule name that&apos;s easy to remember and search for.
-              </p>
-              <div className="flex flex-col gap-4">
+            <div className="bg-white border border-[#b9b6ac] rounded-lg overflow-hidden shadow-[0px_1px_0px_0px_#e8e8e9]">
+              <div className="px-4 py-3">
+                <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[14px] leading-[22px] text-[#141411]">Name Your Rule</h2>
+                <p className="text-[#737169] text-[12px] leading-[19px] font-['FT_Polar_Trim:Regular',sans-serif]">
+                  Pick a short, clear name so you can easily find this rule later. Choose a concise, descriptive rule name that&apos;s easy to remember and search for.
+                </p>
+              </div>
+              <div className="border-t border-[#cdcbc2] px-4 py-4 flex flex-col gap-4">
                 <div>
-                  <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1">
-                    RULE NAME <span className="text-red-500">*</span>
+                  <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1.5">
+                    RULE NAME <span className="text-[#cd3d1b]">*</span>
                   </label>
                   <input
                     type="text"
                     value={ruleName}
                     onChange={(e) => setRuleName(e.target.value)}
-                    className="w-full border border-[#b9b6ac] rounded-lg bg-white text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 focus:outline-none focus:border-[#3077a3]"
+                    className="w-full border border-[#b9b6ac] rounded-lg bg-white text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 h-10 focus:outline-none focus:border-[#3077a3]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1">
+                  <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1.5">
                     RULE DESCRIPTION
                   </label>
                   <textarea
@@ -113,20 +116,22 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
             </div>
 
             {/* Payment Type */}
-            <div className="bg-white border border-[#b9b6ac] rounded-lg p-6">
-              <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[16px] leading-[24px] text-[#141411] mb-1">Payment Type</h2>
-              <p className="text-[#737169] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] mb-4">
-                Specify the Payment Type that will cause this routing rule to be evaluated. A rule is only considered if its trigger conditions are met.
-              </p>
-              <div>
-                <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1">
+            <div className="bg-white border border-[#b9b6ac] rounded-lg overflow-hidden shadow-[0px_1px_0px_0px_#e8e8e9]">
+              <div className="px-4 py-3">
+                <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[14px] leading-[22px] text-[#141411]">Payment Type</h2>
+                <p className="text-[#737169] text-[12px] leading-[19px] font-['FT_Polar_Trim:Regular',sans-serif]">
+                  Specify the Payment Type that will cause this routing rule to be evaluated. A rule is only considered if its trigger conditions are met.
+                </p>
+              </div>
+              <div className="border-t border-[#cdcbc2] px-4 py-4">
+                <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1.5">
                   PAYMENT TYPE
                 </label>
                 <div className="relative">
                   <select
                     value={paymentType}
                     onChange={(e) => setPaymentType(e.target.value)}
-                    className="w-full border border-[#b9b6ac] rounded-lg bg-[#f5f5f1] text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 appearance-none cursor-pointer focus:outline-none focus:border-[#3077a3]"
+                    className="w-full border border-[#b9b6ac] rounded-lg bg-[#edebe4] text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 h-10 appearance-none cursor-pointer focus:outline-none focus:border-[#3077a3]"
                   >
                     <option>Any type of payment</option>
                     <option>Credit Card</option>
@@ -135,87 +140,31 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
                     <option>Apple Pay</option>
                     <option>Google Pay</option>
                   </select>
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <svg className="size-4 text-[#737169]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <SelectIcon />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Conditions */}
-            <div className="bg-white border border-[#b9b6ac] rounded-lg p-6">
-              <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[16px] leading-[24px] text-[#141411] mb-1">Conditions</h2>
-              <p className="text-[#737169] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] mb-4">
-                Specify the conditions that must be met for this rule to be applied. If all conditions are true, the payment will be routed according to this rule.&quot; Or, if using OR logic between groups, specify that clearly.
-              </p>
-              <div>
-                <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1">
-                  CONDITION TYPE
-                </label>
-                <div className="relative">
-                  <select
-                    value={conditionType}
-                    onChange={(e) => setConditionType(e.target.value)}
-                    className="w-full border border-[#b9b6ac] rounded-lg bg-[#f5f5f1] text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 appearance-none cursor-pointer focus:outline-none focus:border-[#3077a3]"
-                  >
-                    <option>Any type of payment</option>
-                    <option>Amount greater than</option>
-                    <option>Country is</option>
-                    <option>Currency is</option>
-                    <option>Payment attempt number</option>
-                    <option>Subscription status</option>
-                  </select>
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <svg className="size-4 text-[#737169]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ConditionsCard />
 
             {/* Select Payment Gateway */}
-            <div className="bg-white border border-[#b9b6ac] rounded-lg p-6">
-              <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[16px] leading-[24px] text-[#141411] mb-1">Select Payment Gateway</h2>
-              <p className="text-[#737169] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] mb-4">
-                Choose the payment gateway to use if the routing conditions are met. You can also set the priority of this rule and whether to stop processing other rules.
-              </p>
-              <div>
-                <label className="block text-[#737169] text-[11px] leading-[16px] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold tracking-wide uppercase mb-1">
-                  HOW SHOULD PAYMENTS BE ROUTED? <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <select
-                    value={routingType}
-                    onChange={(e) => setRoutingType(e.target.value)}
-                    className="w-full border border-[#b9b6ac] rounded-lg bg-[#f5f5f1] text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 appearance-none cursor-pointer focus:outline-none focus:border-[#3077a3]"
-                  >
-                    <option>Default routing</option>
-                    <option>Route through specific gateway</option>
-                    <option>Route with fallback</option>
-                    <option>Round-robin</option>
-                  </select>
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <svg className="size-4 text-[#737169]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <GatewayCard />
 
             {/* Rule Priority */}
-            <div className="bg-white border border-[#b9b6ac] rounded-lg p-6">
-              <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[16px] leading-[24px] text-[#141411] mb-4">Rule priority</h2>
-              <div className="flex items-center gap-3">
+            <div className="bg-white border border-[#b9b6ac] rounded-lg overflow-hidden shadow-[0px_1px_0px_0px_#e8e8e9]">
+              <div className="px-4 py-3">
+                <h2 className="font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[14px] leading-[22px] text-[#141411]">Rule priority</h2>
+              </div>
+              <div className="border-t border-[#cdcbc2] px-4 py-4 flex items-center gap-3">
                 <input
                   type="number"
                   defaultValue={1}
                   min={1}
                   max={totalRules + 1}
-                  className="w-16 border border-[#b9b6ac] rounded-lg bg-white text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 focus:outline-none focus:border-[#3077a3] text-center"
+                  className="w-16 border border-[#b9b6ac] rounded-lg bg-white text-[#141411] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif] px-3 py-2 h-10 focus:outline-none focus:border-[#3077a3] text-center"
                 />
                 <span className="text-[#737169] text-[13px] leading-[20px] font-['FT_Polar_Trim:Regular',sans-serif]">
                   of {totalRules} rules
@@ -226,7 +175,7 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
             {/* Actions */}
             <div className="flex items-center gap-3 pb-8">
               <button
-                onClick={onCreate}
+                onClick={() => onCreate(ruleName || "New Rule", `id-dll-${Date.now()}`)}
                 className="bg-[#ffd706] font-['FT_Polar_Trim:Semibold',sans-serif] font-bold text-[13px] leading-[20px] text-[#141411] px-4 py-2 rounded-lg cursor-pointer hover:bg-[#f5ce00]"
               >
                 {isEdit ? "Save Changes" : "Create Rule"}
@@ -251,8 +200,8 @@ export default function CreateRulePage({ editRule, totalRules, onCancel, onCreat
               {[
                 { label: "RULE NAME", value: ruleName || undefined },
                 { label: "DESCRIPTION", value: ruleDescription || undefined },
-                { label: "WHEN PAYMENT IS", value: conditionType !== "Any type of payment" ? conditionType : undefined },
-                { label: "ROUTE TO", value: routingType !== "Default routing" ? routingType : undefined },
+                { label: "WHEN PAYMENT IS", value: undefined },
+                { label: "ROUTE TO", value: undefined },
                 { label: "RULE STATUS", value: enabled ? "Enabled" : "Disabled" },
                 { label: "RULE PRIORITY", value: `1 of ${totalRules} rules` },
               ].map(({ label, value }) => (
