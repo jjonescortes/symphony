@@ -228,13 +228,7 @@ export function HubDonutChart({
             <Cell key={i} fill={colors[i % colors.length]} />
           ))}
         </Pie>
-        <Tooltip
-          contentStyle={{ fontSize: 13, borderRadius: 6 }}
-          formatter={(value: unknown, name: unknown) => [
-            typeof value === "number" ? value.toLocaleString() : String(value),
-            name,
-          ]}
-        />
+        <Tooltip contentStyle={{ fontSize: 13, borderRadius: 6 }} />
         {showLegend && (
           <Legend
             wrapperStyle={{ fontSize: 13, paddingTop: 8 }}
