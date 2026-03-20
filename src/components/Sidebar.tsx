@@ -22,12 +22,11 @@ const navSections = [
     children: [
       {
         label: "Payments Hub",
-        subItems: [],
+        subItems: ["Overview", "Payment Processing", "Account Updater", "Payment Retry Recovery", "Fraud Prevention"],
       },
       {
         label: "Payments Symphony",
         subItems: ["Routing Rules", "Retry Settings"],
-        defaultExpanded: true,
       },
     ],
     extraLinks: ["Payment Gateways", "Payment Settings"],
@@ -139,8 +138,13 @@ function NavSectionIcon({ icon }: { icon: string }) {
   );
 }
 
-export default function Sidebar({ activePage = "Routing Rules" }: { activePage?: string }) {
-  const [expandedSections, setExpandedSections] = useState<string[]>(["Payments Symphony"]);
+export default function Sidebar({ activePage = "Routing Rules", onNavigate }: { activePage?: string; onNavigate?: (page: string) => void }) {
+  const paymentsHubPages = ["Overview", "Payment Processing", "Account Updater", "Payment Retry Recovery", "Fraud Prevention"];
+  const paymentsSymphonyPages = ["Routing Rules", "Retry Settings"];
+  const initialExpanded = paymentsHubPages.includes(activePage)
+    ? ["Payments Hub"]
+    : ["Payments Symphony"];
+  const [expandedSections, setExpandedSections] = useState<string[]>(initialExpanded);
 
   const toggleSection = (label: string) => {
     setExpandedSections((prev) =>
@@ -243,9 +247,10 @@ export default function Sidebar({ activePage = "Routing Rules" }: { activePage?:
                             return (
                               <div
                                 key={item}
-                                className="flex gap-3 items-center min-h-[28px] pl-[40px] pr-2 rounded-[4px] w-full"
+                                onClick={() => onNavigate?.(item)}
+                                className="flex gap-3 items-center min-h-[28px] pl-[40px] pr-2 rounded-[4px] w-full cursor-pointer"
                               >
-                                <div className={`flex flex-1 items-center px-2 py-1 rounded-[4px] ${isActive ? "bg-[#ffd706]" : ""}`}>
+                                <div className={`flex flex-1 items-center px-2 py-1 rounded-[4px] ${isActive ? "bg-[#ffd706]" : "hover:bg-white/10"}`}>
                                   <span className={`text-[12px] leading-[19px] font-['FT_Polar_Trim:Regular',sans-serif] ${isActive ? "text-[#0d0d0b]" : "text-white"}`}>
                                     {item}
                                   </span>
@@ -258,13 +263,20 @@ export default function Sidebar({ activePage = "Routing Rules" }: { activePage?:
                     </div>
                   );
                 })}
-                {section.extraLinks?.map((link) => (
-                  <div key={link} className="flex items-center min-h-[28px] px-4 w-full">
-                    <div className="flex flex-1 items-center pl-6 py-1 rounded-[4px]">
-                      <span className="text-white text-[12px] leading-[19px] font-['FT_Polar_Trim:Regular',sans-serif]">{link}</span>
+                {section.extraLinks?.map((link) => {
+                  const isActive = link === activePage;
+                  return (
+                    <div
+                      key={link}
+                      onClick={() => onNavigate?.(link)}
+                      className="flex items-center min-h-[28px] px-4 w-full cursor-pointer"
+                    >
+                      <div className={`flex flex-1 items-center pl-6 py-1 rounded-[4px] ${isActive ? "bg-[#ffd706]" : "hover:bg-white/10"}`}>
+                        <span className={`text-[12px] leading-[19px] font-['FT_Polar_Trim:Regular',sans-serif] ${isActive ? "text-[#0d0d0b]" : "text-white"}`}>{link}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

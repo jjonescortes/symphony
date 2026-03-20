@@ -13,7 +13,7 @@ export const initialRules: Rule[] = [
   {
     id: "1",
     ruleId: "id-dll-ll1",
-    name: "Rule Example 1",
+    name: "Waterfall — All Payment Types",
     createdDate: "Apr 23, 2025 9:18 am",
     description: "This is a descriptor field. Is not intended to be mandatory.",
     conditions: "Any type of payment",
@@ -23,7 +23,7 @@ export const initialRules: Rule[] = [
   {
     id: "2",
     ruleId: "id-dll-ll2",
-    name: "Rule Example 2",
+    name: "High-Value Transactions (>$500)",
     createdDate: "Apr 21, 2025 9:55 pm",
     description: "Routes high-value transactions through preferred gateway.",
     conditions: "Amount greater than $500",
@@ -33,7 +33,7 @@ export const initialRules: Rule[] = [
   {
     id: "3",
     ruleId: "id-dll-ll3",
-    name: "Rule Example 3",
+    name: "EU Region Compliance",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Routes EU transactions through EU gateways for compliance.",
     conditions: "Country is in EU region",
@@ -43,7 +43,7 @@ export const initialRules: Rule[] = [
   {
     id: "4",
     ruleId: "id-dll-ll4",
-    name: "Rule Example 4",
+    name: "Subscription Renewals",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Handles recurring subscription payments.",
     conditions: "Payment type is Subscription",
@@ -53,7 +53,7 @@ export const initialRules: Rule[] = [
   {
     id: "5",
     ruleId: "id-dll-ll5",
-    name: "Rule Example 5",
+    name: "ACH Direct Debit",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Routes ACH payments to ACH-capable gateways.",
     conditions: "Payment method is ACH",
@@ -63,7 +63,7 @@ export const initialRules: Rule[] = [
   {
     id: "6",
     ruleId: "id-dll-ll6",
-    name: "Rule Example 6",
+    name: "SEPA Direct Debit",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Handles SEPA direct debit payments.",
     conditions: "Payment method is SEPA",
@@ -73,7 +73,7 @@ export const initialRules: Rule[] = [
   {
     id: "7",
     ruleId: "id-dll-ll7",
-    name: "Rule Example 7",
+    name: "Mobile Wallets (Apple Pay / Google Pay)",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Routes mobile wallet payments.",
     conditions: "Payment method is Apple Pay or Google Pay",
@@ -83,7 +83,7 @@ export const initialRules: Rule[] = [
   {
     id: "8",
     ruleId: "id-dll-ll8",
-    name: "Rule Example 8",
+    name: "Trial Period Payments",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Handles trial period payment processing.",
     conditions: "Subscription is in trial period",
@@ -93,7 +93,7 @@ export const initialRules: Rule[] = [
   {
     id: "9",
     ruleId: "id-dll-ll9",
-    name: "Rule Example 9",
+    name: "Failed Payment Retries",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Routes retry attempts through backup gateways.",
     conditions: "Payment attempt number is greater than 1",
@@ -103,7 +103,7 @@ export const initialRules: Rule[] = [
   {
     id: "10",
     ruleId: "id-dll-ll10",
-    name: "Rule Example 10",
+    name: "Default Catch-All",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Catch-all rule for unmatched payment types.",
     conditions: "All payments",
@@ -113,7 +113,7 @@ export const initialRules: Rule[] = [
   {
     id: "11",
     ruleId: "id-dll-ll1",
-    name: "Rule Example 1 (Inactive)",
+    name: "Waterfall — All Payment Types (Legacy)",
     createdDate: "Apr 23, 2025 9:18 am",
     description: "Disabled version of the primary rule.",
     conditions: "Any type of payment",
@@ -123,7 +123,7 @@ export const initialRules: Rule[] = [
   {
     id: "12",
     ruleId: "id-dll-ll2",
-    name: "Rule Example 2 (Inactive)",
+    name: "High-Value Transactions — v1",
     createdDate: "Apr 21, 2025 9:55 pm",
     description: "Disabled high-value routing rule.",
     conditions: "Amount greater than $500",
@@ -133,7 +133,7 @@ export const initialRules: Rule[] = [
   {
     id: "13",
     ruleId: "id-dll-ll3",
-    name: "Rule Example 3 (Inactive)",
+    name: "EU Region Compliance — v1",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Disabled EU compliance rule.",
     conditions: "Country is in EU region",
@@ -143,7 +143,7 @@ export const initialRules: Rule[] = [
   {
     id: "14",
     ruleId: "id-dll-ll4",
-    name: "Rule Example 4 (Inactive)",
+    name: "Subscription Renewals — v1",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Disabled subscription routing.",
     conditions: "Payment type is Subscription",
@@ -153,7 +153,7 @@ export const initialRules: Rule[] = [
   {
     id: "15",
     ruleId: "id-dll-ll5",
-    name: "Rule Example 5 (Inactive)",
+    name: "ACH Direct Debit — v1",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Disabled ACH routing.",
     conditions: "Payment method is ACH",
@@ -163,7 +163,7 @@ export const initialRules: Rule[] = [
   {
     id: "16",
     ruleId: "id-dll-ll6",
-    name: "Rule Example 6 (Inactive)",
+    name: "SEPA Direct Debit — v1",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Disabled SEPA routing rule.",
     conditions: "Payment method is SEPA",
@@ -173,7 +173,7 @@ export const initialRules: Rule[] = [
   {
     id: "17",
     ruleId: "id-dll-ll7",
-    name: "Rule Example 7 (Inactive)",
+    name: "Mobile Wallets — v1",
     createdDate: "Apr 29, 2025 8:45 pm",
     description: "Disabled mobile wallet routing.",
     conditions: "Payment method is Apple Pay or Google Pay",
